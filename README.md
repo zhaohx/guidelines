@@ -1,4 +1,4 @@
-# guidelines
+# code guidelines
 
 ## Variables
 ### Use meaningful and readable variable names
