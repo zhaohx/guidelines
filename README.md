@@ -187,3 +187,353 @@ const second = arr[1];
 // good
 const [first, second] = arr;
 ```
+
+## strings
+### Use single quotes '' for strings
+```javascript
+// bad
+const name = "Capt. Janeway";
+
+// bad - template literals should contain interpolation or newlines
+const name = `Capt. Janeway`;
+
+// good
+const name = 'Capt. Janeway';
+```
+
+### When programmatically building up strings, use template strings instead of concatenation.(模板字符串)
+```javascript
+// bad
+function sayHi(name) {
+  return 'How are you, ' + name + '?';
+}
+
+// bad
+function sayHi(name) {
+  return ['How are you, ', name, '?'].join();
+}
+
+// bad
+function sayHi(name) {
+  return `How are you, ${ name }?`;
+}
+
+// good
+function sayHi(name) {
+  return `How are you, ${name}?`;
+}
+```
+
+## Functions
+###  Never use arguments, opt to use rest syntax ... instead
+```javascript
+// bad
+function concatenateAll() {
+  const args = Array.prototype.slice.call(arguments);
+  return args.join('');
+}
+
+// good
+function concatenateAll(...args) {
+  return args.join('');
+}
+```
+
+### Use default parameter syntax rather than mutating function arguments
+```javascript
+// really bad
+function handleThings(opts) {
+  // No! We shouldn’t mutate function arguments.
+  // Double bad: if opts is falsy it'll be set to an object which may
+  // be what you want but it can introduce subtle bugs.
+  opts = opts || {};
+  // ...
+}
+
+// still bad
+function handleThings(opts) {
+  if (opts === void 0) {
+    opts = {};
+  }
+  // ...
+}
+
+// good
+function handleThings(opts = {}) {
+  // ...
+}
+```
+
+### Never reassign parameters
+```javascript
+// bad
+function f1(a) {
+  a = 1;
+  // ...
+}
+
+function f2(a) {
+  if (!a) { a = 1; }
+  // ...
+}
+
+// good
+function f3(a) {
+  const b = a || 1;
+  // ...
+}
+```
+
+## Arrow Functions
+### When you must use an anonymous function (as when passing an inline callback), use arrow function notation(匿名函数)
+```javascript
+// bad
+[1, 2, 3].map(function (x) {
+  const y = x + 1;
+  return x * y;
+});
+
+// good
+[1, 2, 3].map((x) => {
+  const y = x + 1;
+  return x * y;
+});
+```
+
+### Always include parentheses around arguments for clarity and consistency.(参数加括号)
+```javascript
+// bad
+[1, 2, 3].map(x => x * x);
+
+// good
+[1, 2, 3].map((x) => x * x);
+```
+### Don’t save references to this. Use arrow functions
+```javascript
+// bad
+function foo() {
+  const self = this;
+  return function () {
+    console.log(self);
+  };
+}
+
+// bad
+function foo() {
+  const that = this;
+  return function () {
+    console.log(that);
+  };
+}
+
+// good
+function foo() {
+  return () => {
+    console.log(this);
+  };
+}
+```
+
+## Classes & Constructors
+### Always use class. Avoid manipulating prototype directly
+```javascript
+// bad
+function Queue(contents = []) {
+  this.queue = [...contents];
+}
+Queue.prototype.pop = function () {
+  const value = this.queue[0];
+  this.queue.splice(0, 1);
+  return value;
+};
+
+// good
+class Queue {
+  constructor(contents = []) {
+    this.queue = [...contents];
+  }
+  pop() {
+    const value = this.queue[0];
+    this.queue.splice(0, 1);
+    return value;
+  }
+}
+```
+
+### Use extends for inheritance
+```javascript
+// bad
+const inherits = require('inherits');
+function PeekableQueue(contents) {
+  Queue.apply(this, contents);
+}
+inherits(PeekableQueue, Queue);
+PeekableQueue.prototype.peek = function () {
+  return this.queue[0];
+};
+
+// good
+class PeekableQueue extends Queue {
+  peek() {
+    return this.queue[0];
+  }
+}
+```
+
+### Methods can return this to help with method chaining
+```javascript
+// bad
+Jedi.prototype.jump = function () {
+  this.jumping = true;
+  return true;
+};
+
+Jedi.prototype.setHeight = function (height) {
+  this.height = height;
+};
+
+const luke = new Jedi();
+luke.jump(); // => true
+luke.setHeight(20); // => undefined
+
+// good
+class Jedi {
+  jump() {
+    this.jumping = true;
+    return this;
+  }
+
+  setHeight(height) {
+    this.height = height;
+    return this;
+  }
+}
+
+const luke = new Jedi();
+
+luke.jump()
+  .setHe
+```
+
+## Modules
+### Always use modules (import/export) over a non-standard module system. You can always transpile to your preferred module system
+```javascript
+// bad
+const AirbnbStyleGuide = require('./AirbnbStyleGuide');
+module.exports = AirbnbStyleGuide.es6;
+
+// ok
+import AirbnbStyleGuide from './AirbnbStyleGuide';
+export default AirbnbStyleGuide.es6;
+
+// best
+import { es6 } from './AirbnbStyleGuide';
+export default es6;
+```
+
+### Do not use wildcard imports
+```javascript
+// bad
+import * as AirbnbStyleGuide from './AirbnbStyleGuide';
+
+// good
+import AirbnbStyleGuide from './AirbnbStyleGuide';
+```
+
+### In modules with a single export, prefer default export over named export
+```javascript
+// bad
+export function foo() {}
+
+// good
+export default function foo() {}
+```
+
+### Do not include JavaScript filename extensions
+```javascript
+// bad
+import foo from './foo.js';
+import bar from './bar.jsx';
+import baz from './baz/index.jsx';
+
+// good
+import foo from './foo';
+import bar from './bar';
+import baz from './baz';
+```
+
+## Comparison Operators & Equality
+### Use === and !== over == and !=
+### Use shortcuts for booleans, but explicit comparisons for strings and numbers
+```javascript
+// bad
+if (isValid === true) {
+  // ...
+}
+
+// good
+if (isValid) {
+  // ...
+}
+
+// bad
+if (name) {
+  // ...
+}
+
+// good
+if (name !== '') {
+  // ...
+}
+
+// bad
+if (collection.length) {
+  // ...
+}
+
+// good
+if (collection.length > 0) {
+  // ...
+}
+```
+
+### When mixing operators, enclose them in parentheses. The only exception is the standard arithmetic operators: +, -, and ** since their precedence is broadly understood. We recommend enclosing / and * in parentheses because their precedence can be ambiguous when they are mixed(提高可读性)
+```javascript
+// bad
+const foo = a && b < 0 || c > 0 || d + 1 === 0;
+
+// bad
+const bar = a ** b - 5 % d;
+
+// bad
+// one may be confused into thinking (a || b) && c
+if (a || b && c) {
+  return d;
+}
+
+// bad
+const bar = a + b / c * d;
+
+// good
+const foo = (a && b < 0) || c > 0 || (d + 1 === 0);
+
+// good
+const bar = a ** b - (5 % d);
+
+// good
+if (a || (b && c)) {
+  return d;
+}
+
+// good
+const bar = a + (b / c) * d;
+```
+
+## Comments
+### Use /** ... */ for multiline comments.
+### Use // for single line comments
+### Use // FIXME: to annotate problems
+### Use // TODO: to annotate solutions to problems
+
+## Semicolons
+为避免出现古怪的错误，在换行符之前在代码中放置分号
