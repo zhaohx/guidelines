@@ -173,8 +173,10 @@ const nodes = Array.from(foo);
 
 // best
 const nodes = [...foo];
+```
 
 ### Use Array.from for converting an array-like object to an array
+```javascript
 const arrLike = { 0: 'foo', 1: 'bar', 2: 'baz', length: 3 };
 
 // bad
