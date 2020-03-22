@@ -1,7 +1,7 @@
-# code guidelines
-<!-- TOC -->autoauto- [code guidelines](#code-guidelines)auto    - [Variables](#variables)auto        - [Use meaningful and readable variable names](#use-meaningful-and-readable-variable-names)auto        - [Avoid using unary increments and decrements (++, --)](#avoid-using-unary-increments-and-decrements----)auto    - [References](#references)auto        - [Use const for all of your references; avoid using var](#use-const-for-all-of-your-references-avoid-using-var)auto        - [If you must reassign references, use let instead of var](#if-you-must-reassign-references-use-let-instead-of-var)auto    - [Object](#object)auto        - [Use object method shorthand](#use-object-method-shorthand)auto        - [Use property value shorthand](#use-property-value-shorthand)auto        - [Only quote properties that are invalid identifiers](#only-quote-properties-that-are-invalid-identifiers)auto        - [Prefer the object spread operator over Object.assign to shallow-copy objects. Use the object rest operator to get a new object with certain properties omitted(展开操作符和剩余操作符)](#prefer-the-object-spread-operator-over-objectassign-to-shallow-copy-objects-use-the-object-rest-operator-to-get-a-new-object-with-certain-properties-omitted展开操作符和剩余操作符)auto    - [Array](#array)auto        - [Use array spreads ... to copy arrays](#use-array-spreads--to-copy-arrays)auto        - [To convert an iterable object to an array, use spreads ... instead of Array.from.](#to-convert-an-iterable-object-to-an-array-use-spreads--instead-of-arrayfrom)auto        - [Use Array.from for converting an array-like object to an array](#use-arrayfrom-for-converting-an-array-like-object-to-an-array)auto        - [Use Array.from instead of spread ... for mapping over iterables, because it avoids creating an intermediate array.](#use-arrayfrom-instead-of-spread--for-mapping-over-iterables-because-it-avoids-creating-an-intermediate-array)auto    - [Destructuring(解构赋值)](#destructuring解构赋值)auto        - [Use object destructuring when accessing and using multiple properties of an object（避免创建临时引用）](#use-object-destructuring-when-accessing-and-using-multiple-properties-of-an-object避免创建临时引用)auto        - [Use array destructuring](#use-array-destructuring)auto    - [strings](#strings)auto        - [Use single quotes '' for strings](#use-single-quotes--for-strings)auto        - [When programmatically building up strings, use template strings instead of concatenation.(模板字符串)](#when-programmatically-building-up-strings-use-template-strings-instead-of-concatenation模板字符串)auto    - [Functions](#functions)auto        - [Never use arguments, opt to use rest syntax ... instead](#never-use-arguments-opt-to-use-rest-syntax--instead)auto        - [Use default parameter syntax rather than mutating function arguments](#use-default-parameter-syntax-rather-than-mutating-function-arguments)auto        - [Never reassign parameters](#never-reassign-parameters)auto    - [Arrow Functions](#arrow-functions)auto        - [When you must use an anonymous function (as when passing an inline callback), use arrow function notation(匿名函数)](#when-you-must-use-an-anonymous-function-as-when-passing-an-inline-callback-use-arrow-function-notation匿名函数)auto        - [Always include parentheses around arguments for clarity and consistency.(参数加括号)](#always-include-parentheses-around-arguments-for-clarity-and-consistency参数加括号)auto        - [Don’t save references to this. Use arrow functions](#dont-save-references-to-this-use-arrow-functions)auto    - [Classes & Constructors](#classes--constructors)auto        - [Always use class. Avoid manipulating prototype directly](#always-use-class-avoid-manipulating-prototype-directly)auto        - [Use extends for inheritance](#use-extends-for-inheritance)auto        - [Methods can return this to help with method chaining](#methods-can-return-this-to-help-with-method-chaining)auto    - [Modules](#modules)auto        - [Always use modules (import/export) over a non-standard module system. You can always transpile to your preferred module system](#always-use-modules-importexport-over-a-non-standard-module-system-you-can-always-transpile-to-your-preferred-module-system)auto        - [Do not use wildcard imports](#do-not-use-wildcard-imports)auto        - [In modules with a single export, prefer default export over named export](#in-modules-with-a-single-export-prefer-default-export-over-named-export)auto        - [Do not include JavaScript filename extensions](#do-not-include-javascript-filename-extensions)auto    - [Comparison Operators & Equality](#comparison-operators--equality)auto        - [Use === and !== over == and !=](#use--and--over--and-)auto        - [Use shortcuts for booleans, but explicit comparisons for strings and numbers](#use-shortcuts-for-booleans-but-explicit-comparisons-for-strings-and-numbers)auto        - [When mixing operators, enclose them in parentheses. The only exception is the standard arithmetic operators: +, -, and ** since their precedence is broadly understood. We recommend enclosing / and * in parentheses because their precedence can be ambiguous when they are mixed(提高可读性)](#when-mixing-operators-enclose-them-in-parentheses-the-only-exception-is-the-standard-arithmetic-operators----and--since-their-precedence-is-broadly-understood-we-recommend-enclosing--and--in-parentheses-because-their-precedence-can-be-ambiguous-when-they-are-mixed提高可读性)auto    - [Comments](#comments)auto        - [Use /** ... */ for multiline comments.](#use----for-multiline-comments)auto        - [Use // for single line comments](#use--for-single-line-comments)auto        - [Use // FIXME: to annotate problems](#use--fixme-to-annotate-problems)auto        - [Use // TODO: to annotate solutions to problems](#use--todo-to-annotate-solutions-to-problems)auto    - [Semicolons](#semicolons)autoauto<!-- /TOC -->
-## Variables
-### Use meaningful and readable variable names
+# 1. code guidelines
+
+## 1.1. Variables
+### 1.1.1. Use meaningful and readable variable names
 ```javascript
 // bad
 var yyyymmdstr = moment().format('YYYY/MM/DD');
@@ -10,7 +10,7 @@ var yyyymmdstr = moment().format('YYYY/MM/DD');
 var yearMonthDay = moment().format('YYYY/MM/DD');
 ```
 
-### Avoid using unary increments and decrements (++, --)
+### 1.1.2. Avoid using unary increments and decrements (++, --)
 ```javascript
 // bad
 
@@ -40,8 +40,8 @@ const sum = array.reduce((a, b) => a + b, 0);
 const truthyCount = array.filter(Boolean).length;
 ```
 
-## References
-### Use const for all of your references; avoid using var
+## 1.2. References
+### 1.2.1. Use const for all of your references; avoid using var
 ```javascript
 // bad
 var a = 1;
@@ -52,7 +52,7 @@ const a = 1;
 const b = 2;
 ```
 
-### If you must reassign references, use let instead of var
+### 1.2.2. If you must reassign references, use let instead of var
 ```javascript
 // bad
 var count = 1;
@@ -67,8 +67,8 @@ if (true) {
 }
 ```
 
-## Object
-### Use object method shorthand
+## 1.3. Object
+### 1.3.1. Use object method shorthand
 ```javascript
 // bad
 const atom = {
@@ -89,7 +89,7 @@ const atom = {
 };
 ```
 
-### Use property value shorthand
+### 1.3.2. Use property value shorthand
 ```javascript
 const lukeSkywalker = 'Luke Skywalker';
 
@@ -104,7 +104,7 @@ const obj = {
 };
 ```
 
-### Only quote properties that are invalid identifiers
+### 1.3.3. Only quote properties that are invalid identifiers
 ```javascript
 // bad
 const bad = {
@@ -121,7 +121,7 @@ const good = {
 };
 ```
 
-### Prefer the object spread operator over Object.assign to shallow-copy objects. Use the object rest operator to get a new object with certain properties omitted(展开操作符和剩余操作符)
+### 1.3.4. Prefer the object spread operator over Object.assign to shallow-copy objects. Use the object rest operator to get a new object with certain properties omitted(展开操作符和剩余操作符)
 ```javascript
 // very bad
 const original = { a: 1, b: 2 };
@@ -139,7 +139,7 @@ const copy = { ...original, c: 3 }; // copy => { a: 1, b: 2, c: 3 }
 const { a, ...noA } = copy; // noA => { b: 2, c: 3 }
 ```
 
-## Array
+## 1.4. Array
 The Array.from() method creates a new, shallow-copied Array instance from an array-like or iterable object.
 ```javascript
 console.log(Array.from('foo'));
@@ -149,7 +149,7 @@ console.log(Array.from([1, 2, 3], x => x + x));
 // expected output: Array [2, 4, 6]
 ```
 
-### Use array spreads ... to copy arrays
+### 1.4.1. Use array spreads ... to copy arrays
 ```javascript
 // bad
 const len = items.length;
@@ -164,7 +164,7 @@ for (i = 0; i < len; i += 1) {
 const itemsCopy = [...items];
 ```
 
-### To convert an iterable object to an array, use spreads ... instead of Array.from.
+### 1.4.2. To convert an iterable object to an array, use spreads ... instead of Array.from.
 ```javascript
 const foo = document.querySelectorAll('.foo');
 
@@ -175,7 +175,7 @@ const nodes = Array.from(foo);
 const nodes = [...foo];
 ```
 
-### Use Array.from for converting an array-like object to an array
+### 1.4.3. Use Array.from for converting an array-like object to an array
 ```javascript
 const arrLike = { 0: 'foo', 1: 'bar', 2: 'baz', length: 3 };
 
@@ -186,7 +186,7 @@ const arr = Array.prototype.slice.call(arrLike);
 const arr = Array.from(arrLike);
 ```
 
-### Use Array.from instead of spread ... for mapping over iterables, because it avoids creating an intermediate array.
+### 1.4.4. Use Array.from instead of spread ... for mapping over iterables, because it avoids creating an intermediate array.
 ```javascript
 // bad
 const baz = [...foo].map(bar);
@@ -195,8 +195,8 @@ const baz = [...foo].map(bar);
 const baz = Array.from(foo, bar);
 ```
 
-## Destructuring(解构赋值)
-### Use object destructuring when accessing and using multiple properties of an object（避免创建临时引用）
+## 1.5. Destructuring(解构赋值)
+### 1.5.1. Use object destructuring when accessing and using multiple properties of an object（避免创建临时引用）
 ```javascript
 // bad
 function getFullName(user) {
@@ -218,7 +218,7 @@ function getFullName({ firstName, lastName }) {
 }
 ```
 
-### Use array destructuring
+### 1.5.2. Use array destructuring
 ```javascript
 const arr = [1, 2, 3, 4];
 
@@ -230,8 +230,8 @@ const second = arr[1];
 const [first, second] = arr;
 ```
 
-## strings
-### Use single quotes '' for strings
+## 1.6. strings
+### 1.6.1. Use single quotes '' for strings
 ```javascript
 // bad
 const name = "Capt. Janeway";
@@ -243,7 +243,7 @@ const name = `Capt. Janeway`;
 const name = 'Capt. Janeway';
 ```
 
-### When programmatically building up strings, use template strings instead of concatenation.(模板字符串)
+### 1.6.2. When programmatically building up strings, use template strings instead of concatenation.(模板字符串)
 ```javascript
 // bad
 function sayHi(name) {
@@ -266,8 +266,8 @@ function sayHi(name) {
 }
 ```
 
-## Functions
-###  Never use arguments, opt to use rest syntax ... instead
+## 1.7. Functions
+### 1.7.1. Never use arguments, opt to use rest syntax ... instead
 ```javascript
 // bad
 function concatenateAll() {
@@ -281,7 +281,7 @@ function concatenateAll(...args) {
 }
 ```
 
-### Use default parameter syntax rather than mutating function arguments
+### 1.7.2. Use default parameter syntax rather than mutating function arguments
 ```javascript
 // really bad
 function handleThings(opts) {
@@ -306,7 +306,7 @@ function handleThings(opts = {}) {
 }
 ```
 
-### Never reassign parameters
+### 1.7.3. Never reassign parameters
 ```javascript
 // bad
 function f1(a) {
@@ -326,8 +326,8 @@ function f3(a) {
 }
 ```
 
-## Arrow Functions
-### When you must use an anonymous function (as when passing an inline callback), use arrow function notation(匿名函数)
+## 1.8. Arrow Functions
+### 1.8.1. When you must use an anonymous function (as when passing an inline callback), use arrow function notation(匿名函数)
 ```javascript
 // bad
 [1, 2, 3].map(function (x) {
@@ -342,7 +342,7 @@ function f3(a) {
 });
 ```
 
-### Always include parentheses around arguments for clarity and consistency.(参数加括号)
+### 1.8.2. Always include parentheses around arguments for clarity and consistency.(参数加括号)
 ```javascript
 // bad
 [1, 2, 3].map(x => x * x);
@@ -350,7 +350,7 @@ function f3(a) {
 // good
 [1, 2, 3].map((x) => x * x);
 ```
-### Don’t save references to this. Use arrow functions
+### 1.8.3. Don’t save references to this. Use arrow functions
 ```javascript
 // bad
 function foo() {
@@ -376,8 +376,8 @@ function foo() {
 }
 ```
 
-## Classes & Constructors
-### Always use class. Avoid manipulating prototype directly
+## 1.9. Classes & Constructors
+### 1.9.1. Always use class. Avoid manipulating prototype directly
 ```javascript
 // bad
 function Queue(contents = []) {
@@ -402,7 +402,7 @@ class Queue {
 }
 ```
 
-### Use extends for inheritance
+### 1.9.2. Use extends for inheritance
 ```javascript
 // bad
 const inherits = require('inherits');
@@ -422,7 +422,7 @@ class PeekableQueue extends Queue {
 }
 ```
 
-### Methods can return this to help with method chaining
+### 1.9.3. Methods can return this to help with method chaining
 ```javascript
 // bad
 Jedi.prototype.jump = function () {
@@ -457,8 +457,8 @@ luke.jump()
   .setHe
 ```
 
-## Modules
-### Always use modules (import/export) over a non-standard module system. You can always transpile to your preferred module system
+## 1.10. Modules
+### 1.10.1. Always use modules (import/export) over a non-standard module system. You can always transpile to your preferred module system
 ```javascript
 // bad
 const AirbnbStyleGuide = require('./AirbnbStyleGuide');
@@ -473,7 +473,7 @@ import { es6 } from './AirbnbStyleGuide';
 export default es6;
 ```
 
-### Do not use wildcard imports
+### 1.10.2. Do not use wildcard imports
 ```javascript
 // bad
 import * as AirbnbStyleGuide from './AirbnbStyleGuide';
@@ -482,7 +482,7 @@ import * as AirbnbStyleGuide from './AirbnbStyleGuide';
 import AirbnbStyleGuide from './AirbnbStyleGuide';
 ```
 
-### In modules with a single export, prefer default export over named export
+### 1.10.3. In modules with a single export, prefer default export over named export
 ```javascript
 // bad
 export function foo() {}
@@ -491,7 +491,7 @@ export function foo() {}
 export default function foo() {}
 ```
 
-### Do not include JavaScript filename extensions
+### 1.10.4. Do not include JavaScript filename extensions
 ```javascript
 // bad
 import foo from './foo.js';
@@ -504,9 +504,9 @@ import bar from './bar';
 import baz from './baz';
 ```
 
-## Comparison Operators & Equality
-### Use === and !== over == and !=
-### Use shortcuts for booleans, but explicit comparisons for strings and numbers
+## 1.11. Comparison Operators & Equality
+### 1.11.1. Use === and !== over == and !=
+### 1.11.2. Use shortcuts for booleans, but explicit comparisons for strings and numbers
 ```javascript
 // bad
 if (isValid === true) {
@@ -539,7 +539,7 @@ if (collection.length > 0) {
 }
 ```
 
-### When mixing operators, enclose them in parentheses. The only exception is the standard arithmetic operators: +, -, and ** since their precedence is broadly understood. We recommend enclosing / and * in parentheses because their precedence can be ambiguous when they are mixed(提高可读性)
+### 1.11.3. When mixing operators, enclose them in parentheses. The only exception is the standard arithmetic operators: +, -, and ** since their precedence is broadly understood. We recommend enclosing / and * in parentheses because their precedence can be ambiguous when they are mixed(提高可读性)
 ```javascript
 // bad
 const foo = a && b < 0 || c > 0 || d + 1 === 0;
@@ -571,11 +571,11 @@ if (a || (b && c)) {
 const bar = a + (b / c) * d;
 ```
 
-## Comments
-### Use /** ... */ for multiline comments.
-### Use // for single line comments
-### Use // FIXME: to annotate problems
-### Use // TODO: to annotate solutions to problems
+## 1.12. Comments
+### 1.12.1. Use /** ... */ for multiline comments.
+### 1.12.2. Use // for single line comments
+### 1.12.3. Use // FIXME: to annotate problems
+### 1.12.4. Use // TODO: to annotate solutions to problems
 
-## Semicolons
+## 1.13. Semicolons
 为避免出现古怪的错误，在换行符之前在代码中放置分号
